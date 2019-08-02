@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         晋江小说推荐
 // @namespace    https://jwang0614.top/
-// @version      0.1
+// @version      0.2
 // @description  在晋江页面推荐相似小说
 // @author       Olivia
 // @match        http://www.jjwxc.net/onebook.php?novelid=*
@@ -26,7 +26,13 @@ $ip_js.insertAfter("#sitehead");
 $(document).ready(function(){
 
     const novel_id = window.location["search"].split("=")[1];
-    // console.log(novel_id);
+    console.log(novel_id);
+
+    var category = $.trim($(".rightul li span")[1].innerHTML);
+    console.log(category);
+    var category_list = category.split("-");
+    var preference_originality = category_list[0] + "-" + category_list[1];
+    console.log(preference_originality);
 
     const url = "http://jwang0614.top/jjwxc_recommender/books/" + novel_id + "/?format=json";
     GM_xmlhttpRequest({
@@ -97,7 +103,7 @@ $(document).ready(function(){
 
                     // console.log(novel_info_dict);
 
-                    const zh_key_dict = {"category_rank": "文章类型", "category_score_rank":"文章类型积分", "preference_rank":"大类", "preference_score_rank":"大类积分"};
+                    const zh_key_dict = {"category_rank": category, "category_score_rank":category + "(积分)", "preference_rank": preference_originality, "preference_score_rank":preference_originality + "(积分)"};
 
                     var $table = $('<table style="width: 984px; margin:10px auto;table-layout: fixed; background:lightgoldenrodyellow;"><tr><th></th><th>#01</th><th>#02</th><th>#03</th><th>#04</th><th>#05</th><th>#06</th><th>#07</th><th>#08</th><th>#09</th><th>#10</th></tr></table>');
 
@@ -108,7 +114,7 @@ $(document).ready(function(){
                             const n_info = novel_info_dict[n_id];
 
 
-                            var $table_cell = $('<td class="novel" style="padding: 10px 10px;"><p class="title"><a data-index="'+item_id+'" data-type="'+key+'" data-nid="'+n_id+'" data-novelid="'+novel_id+'" style="color:green" href="http://www.jjwxc.net/onebook.php?novelid='+ n_id +'">'+n_info["title"]+'</a></p><p class="author" style="color:grey;">by:' + n_info["author"]  + '</p></td>')
+                            var $table_cell = $('<td class="novel" style="padding: 10px 10px;"><p class="title"><a title="这里是显示的文字" data-index="'+item_id+'" data-type="'+key+'" data-nid="'+n_id+'" data-novelid="'+novel_id+'" style="color:green" href="http://www.jjwxc.net/onebook.php?novelid='+ n_id +'">'+n_info["title"]+'</a></p><p class="author" style="color:grey;">by:' + n_info["author"]  + '</p></td>')
                             $table_row.append($table_cell);
 
                         }
@@ -151,6 +157,8 @@ $(document).ready(function(){
                     });
 
 
+
+
                 }
 
 
@@ -166,6 +174,7 @@ $(document).ready(function(){
 
 
 });
+
 
     
 })();
