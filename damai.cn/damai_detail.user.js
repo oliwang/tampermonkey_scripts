@@ -15,8 +15,7 @@ var timer = null;
 
 $(document).ready(function(){
     var service_note_name_seat = $('.service-note .service-note-name:first').text().trim();
-    var service_note_name_express = $('.service-note .service-note-name').text()[1].trim();
-    console.log(service_note_name_express);
+    var service_note_name_express = $('.service-note div.service-note-name')[1].textContent.trim();
 
     if($("div.buybtn").text() === "选座购买" || service_note_name_seat === "可选座"){
         alert("目前不支持选座");
