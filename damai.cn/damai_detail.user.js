@@ -15,13 +15,15 @@ var timer = null;
 
 $(document).ready(function(){
     var service_note_name_seat = $('.service-note .service-note-name:first').text().trim();
-    var service_note_name_express = $('.service-note div.service-note-name')[1].textContent.trim();
+    // var service_note_name_express = $('.service-note div.service-note-name')[1].textContent.trim();
 
     if($("div.buybtn").text() === "选座购买" || service_note_name_seat === "可选座"){
         alert("目前不支持选座");
-    } else if(service_note_name_express !== "快递票"){
-        alert("目前只支持快递票");
-    }else {
+    }
+    // else if(service_note_name_express !== "快递票"){
+    //     alert("目前只支持快递票");
+    // }
+    else {
         insert_ui();
     }
 
