@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         大麦抢票-选场次票价人数
 // @namespace    https://www.jwang0614.top/scripts
-// @version      0.7.0
+// @version      0.7.1
 // @description  辅助购买大麦网演唱会门票
 // @author       Olivia Wang
 // @match        https://detail.damai.cn/*
@@ -14,18 +14,24 @@ var order_url = null;
 var timer = null;
 
 $(document).ready(function(){
-    var service_note_name_seat = $('.service-note .service-note-name:first').text().trim();
-    // var service_note_name_express = $('.service-note div.service-note-name')[1].textContent.trim();
+    var data = sessionStorage.getItem('order_url');
+    if (data) {
+        window.location.href = data;
+    } else {
+        var service_note_name_seat = $('.service-note .service-note-name:first').text().trim();
+        // var service_note_name_express = $('.service-note div.service-note-name')[1].textContent.trim();
 
-    if($("div.buybtn").text() === "选座购买" || service_note_name_seat === "可选座"){
-        alert("目前不支持选座");
+        if($("div.buybtn").text() === "选座购买" || service_note_name_seat === "可选座"){
+            alert("目前不支持选座");
+        }
+        // else if(service_note_name_express !== "快递票"){
+        //     alert("目前只支持快递票");
+        // }
+        else {
+            insert_ui();
+        }
     }
-    // else if(service_note_name_express !== "快递票"){
-    //     alert("目前只支持快递票");
-    // }
-    else {
-        insert_ui();
-    }
+
 
 
 });
@@ -87,6 +93,8 @@ function insert_ui() {
 
         if(result) {
             window.order_url = result;
+            sessionStorage.setItem('order_url', result);
+
             console.log("countdown and go to confirm page");
             timedUpdate();
 
