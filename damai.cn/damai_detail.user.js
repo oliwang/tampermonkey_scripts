@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         大麦抢票-选场次票价人数
 // @namespace    https://www.jwang0614.top/scripts
-// @version      0.7.1
+// @version      0.7.2
 // @description  辅助购买大麦网演唱会门票
 // @author       Olivia Wang
 // @match        https://detail.damai.cn/*
@@ -110,9 +110,11 @@ function insert_ui() {
 
 
     });
+
     $("#end_btn").click(function(){
         clearTimeout(window.timer);
         $("#countdown_wrapper").hide();
+        sessionStorage.clear();
     });
 
 }
