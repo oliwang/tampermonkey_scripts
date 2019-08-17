@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         大麦抢票-确认
 // @namespace    https://www.jwang0614.top/scripts
-// @version      0.7.0
+// @version      0.7.1
 // @description  辅助购买大麦网演唱会门票
 // @author       Olivia Wang
 // @match        https://buy.damai.cn/orderConfirm*
@@ -17,33 +17,24 @@ $(document).ready(function(){
     window.current_url = window.location.href;
     if($(".error-msg").length > 0) {
         window.location.reload();
+        // console.log("error");
     } else {
-        check_loading_mask_0();
+        var buyer_number = parseInt($(".ticket-buyer-title em").text());
+        console.log(buyer_number);
+        var buyer_list = $(".buyer-list-item input");
+        for(var i=0; i < buyer_number; i++) {
+            console.log(buyer_list[i]);
+            buyer_list[i].click();
+        }
+
+        $(".submit-wrapper button").click();
+        setTimeout(check_alert, 1500);
 
     }
 
 
 });
 
-function check_loading_mask_0() {
-    if($(".loading-mask").length > 0) {
-        window.timer = setTimeout(check_loading_mask_0, 100);
-    } else {
-
-        var buyer_number = parseInt($(".ticket-buyer-title em").text());
-
-        var buyer_list = $(".buyer-list-item input");
-        for(var i=0; i < buyer_number; i++) {
-            buyer_list[i].click();
-        }
-
-        check_loading_mask_1();
-
-
-
-
-    }
-}
 
 function check_alert() {
     var alerts = $(".next-dialog-alert");
@@ -52,15 +43,6 @@ function check_alert() {
     }
 }
 
-function check_loading_mask_1() {
-    if($(".loading-mask").length > 0) {
-        print("loading mask");
-        window.timer = setTimeout(check_loading_mask_1, 200);
-    } else {
-        $(".submit-wrapper button").click();
-        setTimeout(check_alert, 1500);
-    }
-}
 
 
 
