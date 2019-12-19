@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         晋江小说推荐
-// @namespace    https://jwang0614.top/
-// @version      0.2
+// @namespace    https://jwang0614.top/scripts
+// @version      0.1
 // @description  在晋江页面推荐相似小说
 // @author       Olivia
 // @match        http://www.jjwxc.net/onebook.php?novelid=*
