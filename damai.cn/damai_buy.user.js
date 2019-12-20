@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         大麦抢票-确认
 // @namespace    https://www.jwang0614.top/scripts
-// @version      0.8.0
+// @version      0.8.1
 // @description  辅助购买大麦网演唱会门票
 // @author       Olivia Wang
 // @match        https://m.damai.cn/app/dmfe/h5-ultron-buy/index.html?*
@@ -20,12 +20,13 @@ var current_time = 500;
 
 var email = null;
 var name = null;
+var duration = null;
 
 $(document).ready(function(){
     window.current_url = window.location.href;
 
     var str = window.current_url;
-    var email_result = str.match(/&email=(\S+)&name=(\S+)/);
+    var email_result = str.match(/&email=(\S+)&name=(\S+)&duration=(\S+)/);
 
     if (!email_result) {
         var itemId_result = str.match(/buyParam=(\d+)_/);
@@ -38,6 +39,8 @@ $(document).ready(function(){
     
     window.email = decodeURI(email_result[1]);
     window.name = decodeURI(email_result[2]);
+    window.duration = parseInt(decodeURI(email_result[3]));
+
 
     webpageLoaded().then(res=>{
         console.log("webpageLoaded success");
@@ -49,7 +52,7 @@ $(document).ready(function(){
                 setTimeout(function(){
                     // window.location.reload();
                      window.location.href = window.current_url;
-                }, 5000);
+                }, window.duration);
             });
         })
     }).catch(err=>{
@@ -57,7 +60,7 @@ $(document).ready(function(){
         setTimeout(function(){
             // window.location.reload();
             window.location.href = window.current_url;
-        }, 5000);
+        }, window.duration);
         // window.location.href = window.current_url;
     });
 

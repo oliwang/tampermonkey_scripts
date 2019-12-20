@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         大麦抢票-选场次票价人数
 // @namespace    https://www.jwang0614.top/scripts
-// @version      0.8.0
+// @version      0.8.1
 // @description  辅助购买大麦网演唱会门票
 // @author       Olivia Wang
 // @match        https://detail.damai.cn/*
@@ -15,6 +15,7 @@ var timer = null;
 var itemId = null;
 var email = null;
 var name = null;
+var duration = null;
 
 $(document).ready(function(){
     window.current_url = window.location.href;
@@ -61,13 +62,14 @@ function insert_ui() {
     var $number_input = $('<div class="input_wrapper" id="number_input_wrapper">请输入人数：<input id="number_input" type="number" value="1" min="1" max="6"></div>');
     var $email_input = $('<div class="input_wrapper" id="email_input_wrapper">email：<input id="email_input" type="email" value="example@hotmail.com"></div>');
     var $name_input = $('<div class="input_wrapper" id="name_input_wrapper">联系人姓名：<input id="name_input" type="text" value="小明"></div>');
+    var $duration_input = $('<div class="input_wrapper" id="duration_input_wrapper">刷新间隔(ms)：<input id="duration_input" type="text" value="5000"></div>');
 
     var $start_btn = $('<button id="start_btn">开始抢票</button>');
     var $end_btn = $('<button id="end_btn">停止抢票</button>');
     var $notice = $('<div id="notice" class="notice"><h3>使用步骤</h3><p>0.登录，填写购票人信息</p><p>1.选择场次</p><p>2.选择价格</p><p>3.填写人数</p><p>4.点击‘开始抢票’</p></div>');
 
-    var $notice2 = $('<div id="notice2" class="notice"><p>倒计时相差1-2秒是四舍五入造成的正常现象</p><p>若误差过大请校准计算机时间</p></div>');
-    var $notice3 = $('<div id="notice3" class="notice"><p>若不想每次输入email,联系人姓名</p><p>请自行修改本脚本62，63行email和联系人的value</p></div>');
+    var $notice2 = $('<div id="notice2" class="notice"><p>倒计时相差1-2秒是四舍五入造成的正常现象</p><p>若误差过大请校准计算机时间，刷新页面</p></div>');
+    var $notice3 = $('<div id="notice3" class="notice"><p>若不想每次输入email，联系人姓名，刷新间隔</p><p>请自行修改本脚本63-65行 email，联系人，刷新间隔的value</p></div>');
 
     var $countdown = $('<div id="countdown_wrapper"><p id="selected_event">event1</p><p id="selected_price">price2</p><p id="selected_number">1人</p><br><p>倒计时:</p><p id="countdown">00:00:00</p></div>');
 
@@ -76,6 +78,7 @@ function insert_ui() {
     $control_container.append($number_input);
     $control_container.append($email_input);
     $control_container.append($name_input);
+    $control_container.append($duration_input);
     $control_container.append($start_btn);
     $control_container.append($end_btn);
     $control_container.append($notice);
@@ -92,6 +95,7 @@ function insert_ui() {
         var people_num = $("#number_input").val();
         var email = $("#email_input").val();
         var name = $("#name_input").val();
+        var duration = $("#duration_input").val();
         var data_json = JSON.parse($("#dataDefault").text());
         window.sellStartTime_timestamp = data_json["sellStartTime"];
 
@@ -116,6 +120,7 @@ function insert_ui() {
             sessionStorage.setItem('email', email);
             window.name = name;
             sessionStorage.setItem('name', name);
+            window.duration = duration;
 
             console.log("countdown and go to confirm page");
             timedUpdate();
@@ -177,7 +182,7 @@ function timedUpdate() {
     var current_time = Date.now();
     var time_difference = Math.ceil((window.sellStartTime_timestamp - current_time)/1000);
     if (time_difference < 2) {
-        var m_url = window.order_url + "&email=" + encodeURI(window.email) + "&name=" + encodeURI(window.name);
+        var m_url = window.order_url + "&email=" + encodeURI(window.email) + "&name=" + encodeURI(window.name) + "&duration=" + encodeURI(window.duration);
         window.location.href = m_url;
         sessionStorage.setItem('order_url', m_url);
         // sessionStorage.setItem('email', window.email);
