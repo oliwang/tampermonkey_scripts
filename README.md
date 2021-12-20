@@ -5,12 +5,11 @@ JavaScript scripts I created for different websites
 
 ## 目录
 ### damai.cn
-- [大麦抢票-选场次票价人数](https://github.com/oliwang/tampermonkey_scripts/blob/master/damai.cn/damai_detail.user.js)
-- [大麦抢票-确认](https://github.com/oliwang/tampermonkey_scripts/blob/master/damai.cn/damai_buy.user.js)
+- <strike>【不再更新】[大麦抢票-选场次票价人数](https://github.com/oliwang/tampermonkey_scripts/blob/master/damai.cn/damai_detail.user.js)</strike>
+- <strike>【不再更新】[大麦抢票-确认](https://github.com/oliwang/tampermonkey_scripts/blob/master/damai.cn/damai_buy.user.js)</strike>
 
-### jjwxc.net
-
-- [小说推荐](https://github.com/oliwang/tampermonkey_scripts/blob/master/jjwxc.net/recommendations.js)
+### weibo.com
+- [批量删除微博](https://github.com/oliwang/tampermonkey_scripts/blob/master/weibo.com/weibo_delete.user.js)
 
 
 
